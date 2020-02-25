@@ -15,7 +15,7 @@ const HomePage=()=>(
                     <h1 className='title'>JACKETS</h1>
                     <spam className='subtitle'>SHOP NOW</spam>
                 </div>
-            </div>
+            </div> 
             <div className='menu-item'>
                 <div className='content'>
                     <h1 className='title'>SNEAKERS</h1>
