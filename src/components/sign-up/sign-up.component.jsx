@@ -1,10 +1,12 @@
 import React from 'react';
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
+import {connect} from 'react-redux';
 
 import {auth, createUserProfileDocument} from '../../firebase/firebase.utils';
 
-import './sign-up.styles.scss';
+import {SignUpContainer, TitleContainer} from './sign-up.styles';
+import {signUpStart} from '../../redux/user/user.actions';
 
 class SignUp extends React.Component{
 
@@ -22,11 +24,15 @@ class SignUp extends React.Component{
     handleSubmit=async event=>{
         event.preventDefault();
         const {displayName, email, password,confirmPassword }=this.state;
+        const {signUpStart}=this.props;  
+        
         if(password !== confirmPassword){
             alert("password don't match");
             return;
         }
-        try{
+        signUpStart(displayName, email, password);
+        
+      /*  try{
             const {user}= await auth.createUserWithEmailAndPassword(email,password);
 
             await createUserProfileDocument(user,{displayName});
@@ -39,7 +45,7 @@ class SignUp extends React.Component{
             });
         }catch(error){
             console.error(error);
-        }
+        }*/
     }
 
     handleChange=event=>{
@@ -51,8 +57,8 @@ class SignUp extends React.Component{
     render(){
         const {displayName, email, password,confirmPassword }=this.state;
         return(
-            <div className='sign-up'>
-                <h2 className='title'>I do not have a account</h2>
+            <SignUpContainer>
+                <TitleContainer>I do not have a account</TitleContainer>
                 <span>Sign up with your email and password</span>
                 <form className='sign-up-form' onSubmit={this.handleSubmit}>
                     <FormInput
@@ -95,9 +101,14 @@ class SignUp extends React.Component{
                     <CustomButton type='submit'>SIGN UP</CustomButton>
                 </form>
 
-            </div>
+            </SignUpContainer>
         )
     }
 }
 
-export default SignUp;
+const mapDispatchToProps=dispatch=>({
+    signUpStart:(displayName, email, password)=>dispatch(signUpStart({displayName, email, password}))
+   
+})
+
+export default connect(null,mapDispatchToProps)(SignUp);
