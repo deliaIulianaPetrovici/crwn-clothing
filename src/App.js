@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 
 import {Route, Switch, Redirect} from 'react-router-dom';
 import {connect} from 'react-redux';
@@ -22,16 +22,19 @@ import {checkUserSession} from './redux/user/user.actions';
 import './App.css';
 
 
-class App extends React.Component {
+const App=({checkUserSession,currentUser})=> {
 
-  unsubscribeFromAuth=null
 
-  componentDidMount(){
-    const {checkUserSession}=this.props;
+  useEffect(()=>{
     checkUserSession();
+  },[]);
+
+  
+    
+    
 
   /*  
-  
+  componentDidMount(){
 const {setCurrentUser}=this.props;
   this.unsubscribeFromAuth= auth.onAuthStateChanged(async userAuth=>{
       if(userAuth){
@@ -48,17 +51,18 @@ const {setCurrentUser}=this.props;
       }
       setCurrentUser(userAuth);
     
-    })  */
-
-
-
-
-  }
-  componentWillUnmount(){
+    }) } 
+    
+      componentWillUnmount(){
     this.unsubscribeFromAuth();
   }
+  */
 
-  render(){
+
+
+
+  
+
     return (
       <div >
         <Header />
@@ -66,7 +70,7 @@ const {setCurrentUser}=this.props;
           <Route exact path ='/' component={HomePage}/>
           <Route  path ='/shop' component={ShopPage}/>
           <Route exact path ='/checkout' component={CheckoutPage}/>
-          <Route   exact path ='/signin' render={()=>this.props.currentUser? (
+          <Route   exact path ='/signin' render={()=>currentUser? (
           <Redirect to='/'/>)
         :
         (
@@ -78,7 +82,7 @@ const {setCurrentUser}=this.props;
       </div>
     );
   }
-}
+
 
 const mapStateToProps=createStructuredSelector({
   currentUser:selectCurrentUser
