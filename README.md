@@ -19,9 +19,7 @@ Integrate with a test Stripe API to handle payments.
 Be able to create account and sign in.
 Be able to sign in with Google.
 
-## Status
 
-Project is: _functional, _not-finished.
 
 ## Inspiration 
 
